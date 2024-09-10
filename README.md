@@ -1,4 +1,5 @@
 # Kanade Record Store
+http://adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/
 
 Repositori ini berisi aplikasi web berbasis Django untuk mengelola dan menampilkan koleksi rekaman musik, yang dibuat sebagai bagian dari tugas kuliah.
 
