@@ -72,8 +72,15 @@ Repositori ini berisi aplikasi web berbasis Django untuk mengelola dan menampilk
     - `name`: CharField
     - `price`: IntegerField
     - `description`: TextField
-
-### 8. Deploy ke PWS (Pacil Web Service)
+      
+### 8. Melakukan migration pada model
+1. Pindah ke directory utama
+2. Jalankan migration pada terminal:
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+### 9. Deploy ke PWS (Pacil Web Service)
 1. Buat project baru di PWS dengan nama `kanaderecordstore` dan simpan credential information.
 2. Di `settings.py`, tambahkan URL `adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/` ke dalam list `ALLOWED_HOSTS`.
 3. Simpan perubahan dengan menjalankan:
@@ -89,7 +96,7 @@ Repositori ini berisi aplikasi web berbasis Django untuk mengelola dan menampilk
     git push pws master
     ```
 
-### 9. Aplikasi Django Terdeploy
+### 10. Aplikasi Django Terdeploy
 Aplikasi sekarang bisa diakses melalui URL:  
 [http://adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/](http://adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/)
 
