@@ -1,7 +1,11 @@
 # Kanade Record Store
-http://adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/
 
-Repositori ini berisi aplikasi web berbasis Django untuk mengelola dan menampilkan koleksi rekaman musik, yang dibuat sebagai bagian dari tugas kuliah.
+## 💿🥁🎹**Link**🎸🎻🎼
+[Kunjungin laman Kanade Record Store](http://adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/)
+
+> **Kanade Record Store** adalah aplikasi penjualan dan pembelian rilisan fisik sepert vinyl, tape, dll untuk kawula muda yang kalcer abiez.
+
+<summary> <b> Tugas 2: Implementasi Model-View-Template (MVT) pada Django </b> </summary>
 
 ## Instruksi Setup Proyek
 
