@@ -5,6 +5,7 @@
 
 > **Kanade Record Store** adalah aplikasi penjualan dan pembelian rilisan fisik sepert vinyl, tape, dll untuk kawula muda yang kalcer abiez.
 
+<details>
 <summary> <b> Tugas 2: Implementasi Model-View-Template (MVT) pada Django </b> </summary>
 
 ## Instruksi Setup Proyek
@@ -125,3 +126,4 @@ Django menggunakan bahasa Python yang relatif mudah dipahami. Django menawarkan 
 
 ## Mengapa Model di Django Disebut sebagai ORM?
 Django menggunakan ORM (Object-Relational Mapping), yang memodelkan data dari database relasional menjadi objek di Python. Ini memungkinkan pengembang untuk berinteraksi dengan database tanpa harus menulis query SQL secara eksplisit, melalui QuerySet API yang disediakan oleh Django.
+</details>
