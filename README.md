@@ -1,6 +1,12 @@
 # Kanade Record Store
 
-Repositori ini berisi aplikasi web berbasis Django untuk mengelola dan menampilkan koleksi rekaman musik, yang dibuat sebagai bagian dari tugas kuliah.
+> **Kanade Record Store** adalah aplikasi penjualan dan pembelian rilisan fisik sepert vinyl, tape, dll untuk kawula muda yang kalcer abiez.
+
+## 💿🥁🎹**Link**🎸🎻🎼
+[Kunjungin laman Kanade Record Store](http://adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/)
+
+<details>
+<summary> <b> Tugas 2: Implementasi Model-View-Template (MVT) pada Django </b> </summary>
 
 ## Instruksi Setup Proyek
 
@@ -71,8 +77,15 @@ Repositori ini berisi aplikasi web berbasis Django untuk mengelola dan menampilk
     - `name`: CharField
     - `price`: IntegerField
     - `description`: TextField
-
-### 8. Deploy ke PWS (Pacil Web Service)
+      
+### 8. Melakukan migration pada model
+1. Pindah ke directory utama
+2. Jalankan migration pada terminal:
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+### 9. Deploy ke PWS (Pacil Web Service)
 1. Buat project baru di PWS dengan nama `kanaderecordstore` dan simpan credential information.
 2. Di `settings.py`, tambahkan URL `adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/` ke dalam list `ALLOWED_HOSTS`.
 3. Simpan perubahan dengan menjalankan:
@@ -88,7 +101,7 @@ Repositori ini berisi aplikasi web berbasis Django untuk mengelola dan menampilk
     git push pws master
     ```
 
-### 9. Aplikasi Django Terdeploy
+### 10. Aplikasi Django Terdeploy
 Aplikasi sekarang bisa diakses melalui URL:  
 [http://adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/](http://adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/)
 
@@ -113,3 +126,4 @@ Django menggunakan bahasa Python yang relatif mudah dipahami. Django menawarkan 
 
 ## Mengapa Model di Django Disebut sebagai ORM?
 Django menggunakan ORM (Object-Relational Mapping), yang memodelkan data dari database relasional menjadi objek di Python. Ini memungkinkan pengembang untuk berinteraksi dengan database tanpa harus menulis query SQL secara eksplisit, melalui QuerySet API yang disediakan oleh Django.
+</details>
