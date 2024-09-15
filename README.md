@@ -1,9 +1,9 @@
 # Kanade Record Store
 
+> **Kanade Record Store** adalah aplikasi penjualan dan pembelian rilisan fisik sepert vinyl, tape, dll untuk kawula muda yang kalcer abiez.
+
 ## 💿🥁🎹**Link**🎸🎻🎼
 [Kunjungin laman Kanade Record Store](http://adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id/)
-
-> **Kanade Record Store** adalah aplikasi penjualan dan pembelian rilisan fisik sepert vinyl, tape, dll untuk kawula muda yang kalcer abiez.
 
 <details>
 <summary> <b> Tugas 2: Implementasi Model-View-Template (MVT) pada Django </b> </summary>
