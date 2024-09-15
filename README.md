@@ -96,7 +96,7 @@ Aplikasi sekarang bisa diakses melalui URL:
 
 Berikut adalah alur proses dari request client ke web aplikasi berbasis Django:
 
-![alt text](image-1.png)
+![alt text](image/image-1.png)
 
 ### Penjelasan
 1. Ketika user mengirimkan HTTP request ke server PWS, request tersebut diteruskan ke WSGI server.
