@@ -137,8 +137,9 @@ Dalam pembuatan platform, tidak jarang ada kebutuhan untuk mengirim ataupun mene
 
 ## Mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
 
-| - | XML | JSON |
+| Format | XML | JSON |
 |Perbandingan| XML adalah bahasa mark up yand memiliki aturan dalam pendefinisian data. XML menggunakan tag yang memisahkan nama data dan nilai data. | JSON adalah suatu format pertukaran data yang mudah untuk dibaca komputer dan manusia. JSON menyimpan data dengan pasangan string key dan value. JSON juga banyak didukung oleh bahasa pemrograman |
+
 |Syntaks| <tag>nilai</tag> | {nama: 'Adam'} |
 
 Dalam konteks pemrograman platform web, JSON lebih baik dan lebih populer dibandingkan dengan XML dengan kelebihan berikut:
@@ -282,47 +283,47 @@ Pemberian ID dimaksudkan agar setiap object memiliki sebuah *identifier* yang be
    ```
    Setiap item yang dibuat akan ditampilkan saat kembali ke halaman utama. Seluruh item diakses melalui `items = Item.objects.all()`.
 6. Mengubah template untuk tampilan utama `main.html` pada direktori `main/template`:
-   ```html
-    {% extends 'base.html' %}
-    {% block content %}
-    <h1>Kanade Record Store</h1>
-    
-    <h5>Name:</h5>
-    <p>{{ name }}</p>
-    
-    <h5>Class:</h5>
-    <p>{{ class }}</p>
-    
-    {% if not items %}
-    <p>Belum ada data item pada Kanade Record Store.</p>
-    {% else %}
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Description</th>
-      </tr>
-    
-      {% comment %} Berikut cara memperlihatkan data mood di bawah baris ini 
-      {% endcomment %} 
-      {% for item in items %}
-      <tr>
-        <td>{{item.name}}</td>
-        <td>{{item.price}}</td>
-        <td>{{item.description}}</td>
-      </tr>
-      {% endfor %}
-    </table>
-    {% endif %}
-    
-    <br />
-    
-    <a href="{% url 'main:create_item_entry' %}">
-      <button>Add New Item Entry</button>
-    </a>
-    
-    {% endblock content %}
-       ```
+```html
+{% extends 'base.html' %}
+{% block content %}
+<h1>Kanade Record Store</h1>
+
+<h5>Name:</h5>
+<p>{{ name }}</p>
+
+<h5>Class:</h5>
+<p>{{ class }}</p>
+
+{% if not items %}
+<p>Belum ada data item pada Kanade Record Store.</p>
+{% else %}
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Description</th>
+  </tr>
+
+  {% comment %} Berikut cara memperlihatkan data mood di bawah baris ini 
+  {% endcomment %} 
+  {% for item in items %}
+  <tr>
+    <td>{{item.name}}</td>
+    <td>{{item.price}}</td>
+    <td>{{item.description}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'main:create_item_entry' %}">
+  <button>Add New Item Entry</button>
+</a>
+
+{% endblock content %}
+```
 ### Mengembalikan data dalam bentuk XML dan JSON
 Untuk mengembalikan data dalam format XML dan JSON, Saya menggunakan `serializers` dan `HttpResponse`
 ```python
@@ -407,9 +408,9 @@ Sehingga aplikasi bisa dilihat di [website ini](http://adam-caldipawell-kanadere
 5. JSON by ID
 ![alt text](image/localhost:json:[id].png)
 source:
-[Django DOCS](https://docs.djangoproject.com/)
-[Slide Data Delivery](https://scele.cs.ui.ac.id/pluginfile.php/238122/mod_resource/content/1/04%20-%20Data%20Delivery.pdf)
-[CSRF by computerphile](https://youtu.be/vRBihr41JTo?si=oXlMrDMj3HlvRsOU)
-[Tutorial 2](https://pbp-fasilkom-ui.github.io/ganjil-2025/docs/tutorial-2)
+1. [Django DOCS](https://docs.djangoproject.com/)
+2. [Slide Data Delivery](https://scele.cs.ui.ac.id/pluginfile.php/238122/mod_resource/content/1/04%20-%20Data%20Delivery.pdf)
+3. [CSRF by computerphile](https://youtu.be/vRBihr41JTo?si=oXlMrDMj3HlvRsOU)
+4. [Tutorial 2](https://pbp-fasilkom-ui.github.io/ganjil-2025/docs/tutorial-2)
 
 </details>
