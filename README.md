@@ -137,18 +137,19 @@ Dalam pembuatan platform, tidak jarang ada kebutuhan untuk mengirim ataupun mene
 
 ## Mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
 
-| Format | XML | JSON |
-|Perbandingan| XML adalah bahasa mark up yand memiliki aturan dalam pendefinisian data. XML menggunakan tag yang memisahkan nama data dan nilai data. | JSON adalah suatu format pertukaran data yang mudah untuk dibaca komputer dan manusia. JSON menyimpan data dengan pasangan string key dan value. JSON juga banyak didukung oleh bahasa pemrograman |
-
-|Syntaks| <tag>nilai</tag> | {nama: 'Adam'} |
+| Format       | XML                                                                 | JSON                                                                                     |
+|--------------|---------------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| Perbandingan | XML adalah bahasa mark up yang memiliki aturan dalam pendefinisian data. XML menggunakan tag yang memisahkan nama data dan nilai data. | JSON adalah format pertukaran data yang mudah dibaca oleh komputer dan manusia. JSON menyimpan data dengan pasangan string key dan value. JSON juga banyak didukung oleh bahasa pemrograman. |
+| Sintaks      | `<tag>nilai</tag>`                                                  | `{nama: 'Adam'}`                                                                          |
 
 Dalam konteks pemrograman platform web, JSON lebih baik dan lebih populer dibandingkan dengan XML dengan kelebihan berikut:
 
 1. Sintaks JSON yang lebih ringkas, ringan, dan mudah untuk dibaca.
 2. JSON mendukung berbagai tipe data, contohnya array.
-3. JSON lebih cepat dibandingkan XML karena pada pemrograman web, javascript memiliki fungsi bawaan yang dapat parsing JSON menjadi javascript object.
-4. JSON didukung oleh banyak bahasa pemrograman karena kemudahan yand diberikan.
-5. 
+3. JSON lebih cepat dibandingkan XML karena pada pemrograman web, JavaScript memiliki fungsi bawaan yang dapat parsing JSON menjadi JavaScript object.
+4. JSON didukung oleh banyak bahasa pemrograman karena kemudahan yang diberikan.
+
+
 ## Jelaskan fungsi dari method `is_valid()` pada form Django dan mengapa kita membutuhkan method tersebut?
 
 Validasi form model secara otomatis akan dilakukan oleh Django melalui pemanggilan fungsi `is_valid()' untuk memastikan kebenaran input yang diberikan.
