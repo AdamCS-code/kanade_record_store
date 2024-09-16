@@ -227,6 +227,7 @@ Pemberian ID dimaksudkan agar setiap object memiliki sebuah *identifier* yang be
    `model = Item` memberitahu ke Django bahwa gunakan Item sebagai model saat pengisian *form*
    `fields = ["name", "price", "description"]` mendefinisikan field yang akan diisi user. <b>ID digenerate secara otomatis oleh UUID</b>
 2. Membuat template baru untuk tampilan dalam menambahkan item baru dengan nama `create_item.html` pada direktori `main/template`:
+    ```html
     {% extends 'base.html' %} 
     {% block content %}
     <h1>Add New Item Entry</h1>
@@ -245,6 +246,7 @@ Pemberian ID dimaksudkan agar setiap object memiliki sebuah *identifier* yang be
     </form>
     
     {% endblock %}
+    ```
 4. Pada berkas `views.py` di directory yang sama. Saya menambahkan sebuah fungsi `create_item_entry` untuk untuk menampilkan *form*:
    ```python
    ...
@@ -324,25 +326,25 @@ Pemberian ID dimaksudkan agar setiap object memiliki sebuah *identifier* yang be
 ### Mengembalikan data dalam bentuk XML dan JSON
 Untuk mengembalikan data dalam format XML dan JSON, Saya menggunakan `serializers` dan `HttpResponse`
 ```python
-    from django.http import HttpResponse
-    from django.core import serializers
-    ...
+from django.http import HttpResponse
+from django.core import serializers
+...
 ```
 <b>Mengembalikan Format XML</b>
 ```python
-    ...
-    def show_xml(request):
-        data = Item.objects.all()
-        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
-    ...
+...
+def show_xml(request):
+    data = Item.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+...
 ```
 <b>Mengembalikan Format JSON</b>
 ```python
-    ...
-    def show_json(request):
-        data = Item.objects.all()
-        return HttpResponse(serializers.serialize("json", data), content_type="application/xml")
-    ...
+...
+def show_json(request):
+    data = Item.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/xml")
+...
 ```
 ### Mengembalikan data dalam bentuk XML dan JSON sesuai [id]
 Untuk mengembalikan data sesuai dengan ID object tersebut maka:
@@ -350,21 +352,21 @@ Untuk mengembalikan data sesuai dengan ID object tersebut maka:
 <b>Mengembalikan Format XML by id</b>
 
 ```python
-    ...
-    def show_xml_by_id(request, id):
-        data = Item.objects.filter(pk=id)
-        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
-    ...
+...
+def show_xml_by_id(request, id):
+    data = Item.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+...
 ```
 
 <b>Mengembalikan Format JSON by id</b>
 
 ```python
-    ...
-    def show_json_by_id(request, id):
-        data = Item.objects.filter(pk=id)
-        return HttpResponse(serializers.serialize("json", data), content_type="application/json")
-    ...
+...
+def show_json_by_id(request, id):
+    data = Item.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+...
 ```
 ### Membuat routing URL untuk masing-masing views yang telah ditambahkan
 
@@ -405,5 +407,9 @@ Sehingga aplikasi bisa dilihat di [website ini](http://adam-caldipawell-kanadere
 5. JSON by ID
 ![alt text](image/localhost:json:[id].png)
 source:
+[Django DOCS](https://docs.djangoproject.com/)
+[Slide Data Delivery](https://scele.cs.ui.ac.id/pluginfile.php/238122/mod_resource/content/1/04%20-%20Data%20Delivery.pdf)
+[CSRF by computerphile](https://youtu.be/vRBihr41JTo?si=oXlMrDMj3HlvRsOU)
+[Tutorial 2](https://pbp-fasilkom-ui.github.io/ganjil-2025/docs/tutorial-2)
 
 </details>
