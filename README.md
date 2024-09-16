@@ -284,47 +284,47 @@ Pemberian ID dimaksudkan agar setiap object memiliki sebuah *identifier* yang be
    ```
    Setiap item yang dibuat akan ditampilkan saat kembali ke halaman utama. Seluruh item diakses melalui `items = Item.objects.all()`.
 6. Mengubah template untuk tampilan utama `main.html` pada direktori `main/template`:
-```html
-{% extends 'base.html' %}
-{% block content %}
-<h1>Kanade Record Store</h1>
-
-<h5>Name:</h5>
-<p>{{ name }}</p>
-
-<h5>Class:</h5>
-<p>{{ class }}</p>
-
-{% if not items %}
-<p>Belum ada data item pada Kanade Record Store.</p>
-{% else %}
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Description</th>
-  </tr>
-
-  {% comment %} Berikut cara memperlihatkan data mood di bawah baris ini 
-  {% endcomment %} 
-  {% for item in items %}
-  <tr>
-    <td>{{item.name}}</td>
-    <td>{{item.price}}</td>
-    <td>{{item.description}}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% endif %}
-
-<br />
-
-<a href="{% url 'main:create_item_entry' %}">
-  <button>Add New Item Entry</button>
-</a>
-
-{% endblock content %}
-```
+    ```html
+    {% extends 'base.html' %}
+    {% block content %}
+    <h1>Kanade Record Store</h1>
+    
+    <h5>Name:</h5>
+    <p>{{ name }}</p>
+    
+    <h5>Class:</h5>
+    <p>{{ class }}</p>
+    
+    {% if not items %}
+    <p>Belum ada data item pada Kanade Record Store.</p>
+    {% else %}
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+      </tr>
+    
+      {% comment %} Berikut cara memperlihatkan data mood di bawah baris ini 
+      {% endcomment %} 
+      {% for item in items %}
+      <tr>
+        <td>{{item.name}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.description}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+    
+    <br />
+    
+    <a href="{% url 'main:create_item_entry' %}">
+      <button>Add New Item Entry</button>
+    </a>
+    
+    {% endblock content %}
+    ```
 ### Mengembalikan data dalam bentuk XML dan JSON
 Untuk mengembalikan data dalam format XML dan JSON, Saya menggunakan `serializers` dan `HttpResponse`
 ```python
