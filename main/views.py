@@ -1,9 +1,10 @@
+
 from django.shortcuts import render, redirect
 from main.forms import ItemEntryForm
 from main.models import Item
 from django.http import HttpResponse
 from django.core import serializers
-#coba ajah
+
 def show_json(request):
     data = Item.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
