@@ -5,8 +5,13 @@
 <h5>Name:</h5>
 <p>{{ name }}</p>
 
+<h5>NPM:</h5>
+<p>{{ npm }}</p>
+
 <h5>Class:</h5>
 <p>{{ class }}</p>
+
+<h5>Sesi terakhir login: {{ last_login }}</h5>
 
 {% if not items %}
 <p>Belum ada data item pada Kanade Record Store.</p>
@@ -35,5 +40,7 @@
 <a href="{% url 'main:create_item_entry' %}">
   <button>Add New Item Entry</button>
 </a>
-
+<a href="{% url 'main:logout' %}">
+  <button>Logout</button>
+</a>
 {% endblock content %}
