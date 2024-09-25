@@ -416,8 +416,9 @@ source:
 
 </details>
 
-<summary> <b> Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django </b> </summary>
 <details>
+<summary> <b> Tugas 4: Implementasi Autentikasi, Session, dan Cookies pada Django </b> </summary>
+
 
 ## Apa perbedaan antara `HttpResponseRedirect()` dan `redirect()`
 `HttpResponseRedirect` adalah *class* dari modul django.http yang mengembalikan respons pengalihan HTTP dengan kode status 302 (Found). Kode status ini menunjukkan bahwa pengguna atau klien akan dialihkan ke URL baru. *class* ini menerima parameter berupa URL tujuan yang spesifik dan sangat berguna jika kita ingin mengarahkan pengguna ke URL statis atau memerlukan logika pengalihan yang lebih kompleks.
