@@ -84,3 +84,26 @@ def show_main(request):
         'last_login': request.COOKIES['last_login'],
     }
     return render(request, "main.html", context)
+
+def edit_item(request, id):
+    # Get mood entry berdasarkan id
+    item = Item.objects.get(pk = id)
+
+    # Set mood entry sebagai instance dari form
+    form = ItemEntryForm(request.POST or None, instance=item)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_item.html", context)
+
+def delete_item(request, id):
+    # Get mood berdasarkan id
+    item = Item.objects.get(pk = id)
+    # Hapus mood
+    item.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))

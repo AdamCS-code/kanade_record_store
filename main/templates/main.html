@@ -1,47 +1,48 @@
 {% extends 'base.html' %}
-{% use 'navbar.html' %}
-{% include content %}
-<h1>Kanade Record Store</h1>
 
-<h5>Name:</h5>
-<p>{{ name }}</p>
+<!-- Menyertakan static -->
+{% load static %}
+{% block content %}
+<!-- Menyertakan navbar -->
+{% include 'navbar.html' %}
 
-<h5>NPM:</h5>
-<p>{{ npm }}</p>
+<!-- Konten utama -->
+<div class="max-w-7xl mx-auto p-12 py-2 px-4 sm:px-6 lg:px-8">
 
-<h5>Class:</h5>
-<p>{{ class }}</p>
+  <!-- Informasi pengguna -->
+  <div class="bg-white shadow-lg rounded-lg p-6 mt-20 mb-8">
+    <h5 class="text-xl font-semibold">Name:</h5>
+    <p class="text-gray-700 mb-4">{{ name }}</p>
 
-<h5>Sesi terakhir login: {{ last_login }}</h5>
+    <h5 class="text-xl font-semibold">NPM:</h5>
+    <p class="text-gray-700 mb-4">{{ npm }}</p>
 
-{% if not items %}
-<p>Belum ada data item pada Kanade Record Store.</p>
-{% else %}
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Description</th>
-  </tr>
+    <h5 class="text-xl font-semibold">Class:</h5>
+    <p class="text-gray-700 mb-4">{{ class }}</p>
 
-  {% comment %} Berikut cara memperlihatkan data mood di bawah baris ini 
-  {% endcomment %} 
-  {% for item in items %}
-  <tr>
-    <td>{{item.name}}</td>
-    <td>{{item.price}}</td>
-    <td>{{item.description}}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% endif %}
+    <h5 class="text-xl font-semibold">Sesi terakhir login:</h5>
+    <p class="text-gray-700 mb-4">{{ last_login }}</p>
+  </div>
 
-<br />
+  <div class="flex justify-end mb-6">
+    <a href="{% url 'main:create_item_entry' %}" class="bg-green-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+        Add New Item Entry
+    </a>
+  </div>
 
-<a href="{% url 'main:create_item_entry' %}">
-  <button>Add New Item Entry</button>
-</a>
-<a href="{% url 'main:logout' %}">
-  <button>Logout</button>
-</a>
+  {% if not items %}
+    <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+        <img src="{% static 'image/image.png' %}" alt="Sad face" class="w-32 h-32 mb-4"/>
+        <p class="text-center text-gray-600 mt-4">Belum ada data Item pada Kanade Record Store.</p>
+    </div>
+    {% else %}
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full">
+        {% for it in items %}
+            {% include 'card_item.html' with item=it %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+
 {% endblock content %}

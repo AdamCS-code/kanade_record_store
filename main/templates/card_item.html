@@ -1,0 +1,31 @@
+{% load static %}
+<div class="relative break-inside-avoid">
+  <div class="relative top-5 bg-gray-100 shadow-md rounded-lg mb-6 break-inside-avoid flex flex-col border-2 border-gray-300 transform rotate-1 hover:rotate-0 transition-transform duration-300 p-4">
+    
+    <!-- Gambar -->
+    <img src="{% static 'image/image.png' %}" class="scale-[0.3] relative -top-3">
+
+    <!-- Informasi Item -->
+    <div class="mt-4 text-center">
+      <!-- Nama Item -->
+      <h2 class="text-xl font-semibold text-gray-800">{{ item.name }}</h2>
+
+      <!-- Harga Item -->
+      <p class="text-lg text-gray-600">{{ item.price }}</p>
+
+      <!-- Deskripsi Item -->
+      <p class="text-sm text-gray-500 mt-2">{{ item.description }}</p>
+    </div>
+
+  </div>
+
+  <!-- Tombol Aksi -->
+  <div class="absolute top-0 -right-4 flex space-x-1">
+    <a href="{% url 'main:delete_item' item.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full p-2 transition duration-300 shadow-md">
+      <img src="{% static 'image/delete.svg' %}" class="w-10 h-10">
+    </a>
+    <a href="{% url 'main:edit_item' item.pk %}" class="bg-red-500 hover:bg-red-600 text-white rounded-full p-2 transition duration-300 shadow-md">
+      <img src="{% static 'image/edit.svg' %}" class="w-10 h-10">
+    </a>
+  </div>
+</div>
