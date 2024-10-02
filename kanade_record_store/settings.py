@@ -122,8 +122,6 @@ if DEBUG:
     STATICFILES_DIRS = [
         BASE_DIR / 'static'  # merujuk ke /static root project pada mode development
     ]
-else:
-    STATIC_ROOT = BASE_DIR / 'static'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Default primary key field type
