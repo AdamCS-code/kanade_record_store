@@ -1,56 +1,33 @@
-
-  <nav class="fixed top-4 left-4 right-4 bg-gray-200 rounded-lg shadow-lg px-6 py-4 flex items-center justify-between flex-wrap">
-    <!-- Branding or Logo -->
-    <div class="flex items-center flex-shrink-0 text-gray-700 mr-6">
-        <span class="font-semibold text-xl tracking-tight">Kanade Record Store</span>
+<nav class="fixed top-5 z-50 inset-x-5 backdrop-blur bg-gradient-to-br from-rose-300/10 to-sky-200/10 rounded-2xl shadow-2xl border-2 border-opacity-30 border-white ">
+    <div class="flex justify-between items-center px-6 md:px-8 sm:px-6 h-16 ">
+        <h1 class="text-slate-700 font-extrabold text-center text-3xl"> Kanade Record </h1>
+        <div class="hidden md:flex items-center ">
+            <span class="mr-4 text-slate-700"> Welcome, Adam </span>
+            <a href="{% url 'main:logout' %}" class="bg-red-500 hover:bg-red-600 font-bold text-white text-xl transition duration-700 rounded px-4 py-2">Logout</a>
+        </div>
+        <div class="flex md:hidden items-center">
+            <button class="mobile-menu-button rounded hover:bg-gray-300 p-1">
+                <svg class="w-6 h-6 text-slate-700" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
     </div>
-
-    <!-- Mobile menu button -->
-    <div class="block lg:hidden">
-        <button id="menu-button" class="flex items-center px-3 py-2 border rounded text-gray-700 border-gray-700 hover:text-gray-900 hover:border-gray-900">
-            <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <title>Menu</title>
-                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-            </svg>
-        </button>
+    <!-- Mobile menu -->
+<div class="mobile-menu hidden md:hidden  px-4 w-full md:max-w-full">
+    <div class="pt-2 pb-3 space-y-1 mx-auto">
+        <span class="block text-slate-700 px-3 py-2">Welcome, {{ user.username }}</span>
+        <a href="{% url 'main:logout' %}" class="block text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+            Logout
+        </a>
     </div>
-
-    <!-- Navbar Links and Actions -->
-    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden" id="menu">
-      <div class="text-sm lg:flex-grow">
-          <a href="#about" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-gray-900 mr-4">
-              About
-          </a>
-          <a href="#contact" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-gray-900 mr-4">
-              Contact Us
-          </a>
-          <a href="#product" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-gray-900 mr-4">
-              Product
-          </a>
-          <a href="#cart" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-gray-900">
-              Cart
-          </a>
-      </div>
-      <div class="flex items-center mt-4 lg:mt-0">
-            <span class="text-gray-700 mr-4">Welcome, {{ user.username }}</span>
-            <a href="{% url 'main:logout' %}">
-              <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                  Logout
-              </button>
-            </a>
-      </div>
-    </nav>
-
-<!-- JavaScript for Mobile Menu Toggle -->
+</div>
 <script>
-    const menuButton = document.getElementById('menu-button');
-    const menu = document.getElementById('menu');
+    const btn = document.querySelector("button.mobile-menu-button");
+    const menu = document.querySelector(".mobile-menu");
 
-    menuButton.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
+    btn.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
     });
-
-    // Optional: Dynamically set the username
-    // Replace 'John Doe' with the actual user name from your backend or authentication system
-    document.getElementById('username').textContent = 'John Doe';
 </script>
+</nav>
