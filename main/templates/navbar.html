@@ -2,7 +2,7 @@
     <div class="flex justify-between items-center px-6 md:px-8 sm:px-6 h-16 ">
         <h1 class="text-slate-700 font-extrabold text-center text-3xl"> Kanade Record </h1>
         <div class="hidden md:flex items-center ">
-            <span class="mr-4 text-slate-700"> Welcome, Adam </span>
+            <span class="mr-4 text-slate-700"> Welcome, {{ user.username }} </span>
             <a href="{% url 'main:logout' %}" class="bg-red-500 hover:bg-red-600 font-bold text-white text-xl transition duration-700 rounded px-4 py-2">Logout</a>
         </div>
         <div class="flex md:hidden items-center">
