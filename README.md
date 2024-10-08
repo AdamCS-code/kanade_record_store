@@ -1172,3 +1172,224 @@ Grid Layout: Grid Layout memungkinkan pengaturan elemen dalam dua dimensi (baris
       STATIC_ROOT = BASE_DIR / 'static'
   ```
 </details>
+
+<details>
+<summary> <b> Tugas 6: JavaScript dan AJAX </b> </summary>
+
+## Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+
+HTML, CSS, dan Javascript adalah tools yang digunakan dalam pengembangan aplikasi web. Javascript dapat membuat website yang kita buat menjadi lebih interaktif dan dinamis. Tentunya, hal ini membawa pengalaman user yang menggunakan website kita jadi lebih baik. Dengan javascript, kita dapat memanipulasi DOM HTML dan dapat mengatur aksi pengguna (semisal menekan button) agar menjalankan sesuatu. Selain itu, Javascript juga menjadi bagian dari teknologi AJAX, dimana pemrosesan request dapat berjalan secara asinkronus.
+
+## Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?
+
+Ketika kita menggunakan await fetch(url), program akan menunggu hingga permintaan fetch selesai dan mengembalikan respons. Hasil respons ini kemudian bisa disimpan ke dalam variabel dan digunakan langsung setelahnya. Jika kita tidak menggunakan await, fetch() akan langsung mengembalikan Promise tanpa menunggu hasilnya. Kita perlu menggunakan metode then() untuk mengolah hasil ketika permintaan selesai. Jika kita mencoba mengakses data sebelum Promise tersebut selesai, data yang kita akses kemungkinan besar belum ada atau tidak sesuai dengan yang diharapkan. Tanpa await, kita harus menggunakan callback secara manual, yang bisa membuat kode terlihat lebih rumit dan susah diikuti terutama ketika ada beberapa operasi asinkron yang berurutan.
+
+## Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?
+Penggunaan decorator csrf_exempt diperuntukan agar pada saat dilakukan request post pada pembuatan item secara asynchronus. Secara default, ketika menggunakan AJAX POST, token CSRF tidak selalu disertakan secara otomatis dalam permintaan, sehingga seringkali menyebabkan kegagalan validasi CSRF. Penambahan decorator dilakukan agar request AJAX POST bisa dilakukan tanpa error. Namun, penggunaan @csrf_exempt harus dilakukan dengan hati-hati karena menonaktifkan lapisan perlindungan penting.
+
+## Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+
+Pembersihan data pada backend dilakukan untuk memastikan bahwa data yang datang bersama dengan request dari user sudah divalidasi terlebih dahulu. Hal ini mencegah kelalaian pada validasi frontend saja. Selain itu, hal ini digunakan atas alasan keamanan. Backend dapat memfilter apa saja yang masuk, sehingga dapat menghindari serangan XSS, misalnya dengan mengirimkan request berupa kode JS yang dapat dijalankan. Hal ini berbahaya karena penyerang dapat mengirimkan kode JS yang dapat melanggar privasi.
+
+## Implementasi Kode
+Untuk mengimplementasikan AJAX pada tugas 6 ini, beriku perubahan yang terjadi.
+### Membuat fungsi untuk menambahkan ITEM dengan AJAX
+Pada views.py, saya menambahkan kode berikut ini yang nantinya bertanggung jawab dalam penambahan item menggunakan AJAX:
+```
+@csrf_exempt
+@require_POST
+def add_item_entry_ajax(request):
+    name = strip_tags(request.POST.get("name"))
+    price = strip_tags(request.POST.get("price"))
+    description = request.POST.get("description")
+    user = request.user
+
+    new_item = Item(
+        name=name, price=price,
+        description=description,
+        user=user
+    )
+    new_item.save()
+
+    return HttpResponse(b"CREATED", status=201)
+```
+saya membuat fungsi `add_item_entry_ajax` dengan dekorator @csrf_exempt untuk memberitahu banyak fungsi ini tidak perlu token CSRF. Kemudian, tidak lupa melakukan routing pada `urls.py`
+```
+path('create-item-entry-ajax', add_item_entry_ajax, name='add_item_entry_ajax'),
+```
+### Menampilkan Item dengan `fetch()`
+Saya mengubah bagian dari main.html yang berperan dalam menampilkan data item menjadi sebagai berikut:
+```
+<div id="item_entry_cards"></div>
+```
+Kemudian, saya juga menambahkan script untuk menampilkan data item
+```
+async function refreshItemEntries() {
+  document.getElementById("item_entry_cards").innerHTML = "";
+  document.getElementById("item_entry_cards").className = "";
+  const itemEntries = await getItemEntries();
+  let htmlString = "";
+  let classNameString = "";
+
+  if (itemEntries.length === 0) {
+      classNameString = "flex flex-col items-center justify-center min-h-[24rem] p-6";
+      htmlString = `
+          <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+            {%include 'image.html'%}
+            <p class="text-center text-gray-600 mt-4">Belum ada data Item pada Kanade Record Store.</p>
+          </div>
+      `;
+  }
+  else {
+      classNameString = "columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 w-full"
+      itemEntries.forEach((item) => {
+          const name = DOMPurify.sanitize(item.fields.name);
+          const description = DOMPurify.sanitize(item.fields.description);
+          htmlString += `
+          <div class="relative break-inside-avoid">
+            <div class="relative top-5 bg-gray-100 shadow-md rounded-lg mb-6 break-inside-avoid space-evenly flex flex-row border-2 border-gray-300 p-4">
+              
+              <div class="flex flex-col items-center">
+                {%include 'image.html'%}
+                <!-- Informasi harga -->
+                <h2 class="text-2xl font-extrabold text-slate-700"> Rp ${item.fields.price}</h2>
+              </div>
+              
+              <!-- informasi nama dan deskrisi-->
+              <div class="flex flex-col space-around ml-6">
+                <div class="flex">
+                  <h2 class="flex text-3xl font-semibold text-gray-500">${name}</h2>
+                </div>
+                <div class="flex">
+                  <p class="text-black"> ${description}</p>
+                </div>
+                
+              </div>
+            </div>
+
+            <div class="absolute bottom-0 -right-0 flex space-x-2 mr-2">
+              <a href="/delete/${item.pk}" class="bg-rose-500 hover:bg-rose-600 text-white rounded-full p-2 transition duration-300 shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30">
+                  <path d="M 14.984375 2.4863281 A 1.0001 1.0001 0 0 0 14 3.5 L 14 4 L 8.5 4 A 1.0001 1.0001 0 0 0 7.4863281 5 L 6 5 A 1.0001 1.0001 0 1 0 6 7 L 24 7 A 1.0001 1.0001 0 1 0 24 5 L 22.513672 5 A 1.0001 1.0001 0 0 0 21.5 4 L 16 4 L 16 3.5 A 1.0001 1.0001 0 0 0 14.984375 2.4863281 z M 6 9 L 7.7929688 24.234375 C 7.9109687 25.241375 8.7633438 26 9.7773438 26 L 20.222656 26 C 21.236656 26 22.088031 25.241375 22.207031 24.234375 L 24 9 L 6 9 z"></path>
+              </svg>
+              </a>
+              <a href="/edit-item/${item.pk}" class="bg-sky-500 hover:bg-sky-600 text-white rounded-3xl p-2 transition duration-300 shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24"> <path d="M 18 2 L 15.585938 4.4140625 L 19.585938 8.4140625 L 22 6 L 18 2 z M 14.076172 5.9238281 L 3 17 L 3 21 L 7 21 L 18.076172 9.9238281 L 14.076172 5.9238281 z"></path> </svg>
+              </a>
+            </div>
+            
+          </div>
+          `;
+      });
+  }
+  document.getElementById("item_entry_cards").className = classNameString;
+  document.getElementById("item_entry_cards").innerHTML = htmlString;
+}
+```
+Jadi, fungsi `refreshItemEntries()` akan akan dipanggil untuk load perubahan dari Item, entah saat item diubah, ditambahkan, atau dihapus. Tentunya secara asynchronus.
+
+### Membuat modal form untuk menambah Item
+
+Berikut ini implementasi dari modal form untuk menambahkan item baru secara asynchronus,
+```
+<div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+  <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+    <!-- Modal header -->
+    <div class="flex items-center justify-between p-4 border-b rounded-t">
+      <h3 class="text-xl font-semibold text-gray-900">
+        Add New Item Entry
+      </h3>
+      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+    <!-- Modal body -->
+    <div class="px-6 py-4 space-y-6 form-style">
+      <form id="itemEntryForm">
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+          <input type="text" id="name" name="name" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Enter Album's name" required>
+        </div>
+        <div class="mb-4">
+          <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+          <input type="number" id="price" name="price" min="1" max="1000000000" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" required>
+        </div>
+        <div class="mb-4">
+          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea id="description" name="description" rows="3" class="mt-1 block w-full h-52 resize-none border border-gray-300 rounded-md p-2 hover:border-indigo-700" placeholder="Describe Album briefly" required></textarea>
+        </div>
+      </form>
+    </div>
+    <!-- Modal footer -->
+    <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
+      <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
+      <button type="submit" id="submitItemEntry" form="itemEntryForm" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+    </div>
+  </div>
+</div>
+```
+Kemudian, agar aksi yang diinginkan, seperti tombol submit bisa bekerja sebagaimana mestinya. Berikut script yang saya tambahkan
+```
+const modal = document.getElementById('crudModal');
+const modalContent = document.getElementById('crudModalContent');
+
+function showModal() {
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+    modal.classList.remove('hidden'); 
+    setTimeout(() => {
+      modalContent.classList.remove('opacity-0', 'scale-95');
+      modalContent.classList.add('opacity-100', 'scale-100');
+    }, 50); 
+}
+
+function hideModal() {
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+    modalContent.classList.remove('opacity-100', 'scale-100');
+    modalContent.classList.add('opacity-0', 'scale-95');
+
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 150); 
+}
+
+document.getElementById("cancelButton").addEventListener("click", hideModal);
+document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+
+function addItemEntry() {
+  fetch("{% url 'main:add_item_entry_ajax' %}", {
+    method: "POST",
+    body: new FormData(document.querySelector('#itemEntryForm')),
+  })
+  .then(response => refreshItemEntries())
+
+  document.getElementById("itemEntryForm").reset(); 
+  document.querySelector("[data-modal-toggle='crudModal']").click();
+
+  return false;
+}
+
+async function getItemEntries(){
+    return fetch("{% url 'main:show_json' %}").then((res) => res.json())
+}
+```
+### Menambah tomboh submit form item secara asynchronus
+Kemudian saya juga menambahkan button baru untuk memuat modal form pada `main.html`
+```
+<button data-modal-target="crudModal" data-modal-toggle="crudModal" class="btn ml-6 bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="showModal();">
+  Add New Item Entry by AJAX
+</button>
+```
+Dan agar fungsionalitas nya sesuai, mengirimkan AJAX POST request, saya menambahkan script berikut
+document.getElementById("itemEntryForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  addItemEntry();
+})
+
+</details>
