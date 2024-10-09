@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-7y8!u3cyd9ws((3@ptr56k&(bfm@1e2*&pl(+#^pjkb^bau&2%
 
 # SECURITY WARNING: don't run with debug turned on in production!
 PRODUCTION = os.getenv("PRODUCTION", False)
-DEBUG = not PRODUCTION
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id"]
 
@@ -118,13 +118,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 if DEBUG:
     STATICFILES_DIRS = [
         BASE_DIR / 'static'  # merujuk ke /static root project pada mode development
     ]
-else:
-    STATIC_ROOT = BASE_DIR / 'static'
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
