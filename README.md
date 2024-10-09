@@ -820,7 +820,7 @@ Grid Layout: Grid Layout memungkinkan pengaturan elemen dalam dua dimensi (baris
       {% endblock %}
 
       ```
-    - Create item page (`create_item_entry.html)
+    - Create item page (`create_item_entry.html`)
       - Menambahkan box sebagai container input - input sesuai field dari model
       - Memberikan styling menggunakan tailwind css
       ```
