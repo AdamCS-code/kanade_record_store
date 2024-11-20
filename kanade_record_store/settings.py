@@ -26,9 +26,14 @@ SECRET_KEY = 'django-insecure-7y8!u3cyd9ws((3@ptr56k&(bfm@1e2*&pl(+#^pjkb^bau&2%
 PRODUCTION = os.getenv("PRODUCTION", False)
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "adam-caldipawell-kanaderecordstore.pbp.cs.ui.ac.id", "10.0.2.2"]
 
-
+CORS_ALLOW_ALL_ORIGINS=True
+CORS_ALLOW_CREDENTIALS=True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'authentication',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'kanade_record_store.urls'
